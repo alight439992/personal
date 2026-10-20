@@ -1,0 +1,7 @@
+import { Link } from 'react-router-dom'
+import { getStore } from '../../api/storage'
+export default function Dashboard() {
+  const s=getStore()
+  const stats=[['项目总数',s.projects.length,'◇','/admin/projects'],['技能条目',s.skills.length,'✧','/admin/skills'],['博客文章',s.posts.length,'▤','/admin/posts'],['公开文章',s.posts.filter(p=>p.published).length,'◉','/admin/posts']]
+  return <div className="admin-content"><div className="admin-page-title"><div><span className="section-index">OVERVIEW</span><h1>仪表盘</h1><p className="muted">欢迎回来！这里是你的网站概况。</p></div><Link className="primary-button" to="/">查看网站 ↗</Link></div><div className="stats-grid">{stats.map(([label,num,icon,url])=><Link to={String(url)} className="stat-card" key={String(label)}><span className="stat-icon">{icon}</span><span className="stat-label">{label}</span><strong>{num}</strong><span className="stat-foot">管理内容 ↗</span></Link>)}</div><div className="admin-panel"><div className="panel-heading"><div><h2>快速操作</h2><p className="muted">常用内容管理入口</p></div></div><div className="quick-grid"><Link to="/admin/profile">☺　编辑个人资料 <span>→</span></Link><Link to="/admin/projects">◇　添加项目 <span>→</span></Link><Link to="/admin/posts">▤　撰写博客 <span>→</span></Link><Link to="/admin/settings">⚙　网站设置 <span>→</span></Link></div></div><div className="admin-note"><span>✦</span><div><strong>本地演示提醒</strong><p>数据保存在当前浏览器的 localStorage 中。正式部署后，每个访客浏览器的数据彼此独立；如需所有访客共享管理内容，需要接入真实后端数据库。</p></div></div></div>
+}

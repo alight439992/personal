@@ -1,0 +1,7 @@
+import { useState } from 'react'
+import { getStore, updateStore } from '../../api/storage'
+export default function ProfileAdmin(){
+ const [profile,setProfile]=useState(getStore().profile);const [saved,setSaved]=useState(false)
+ function submit(e:React.FormEvent){e.preventDefault();updateStore('profile',profile);setSaved(true)}
+ return <div className="admin-content"><div className="admin-page-title"><div><span className="section-index">YOUR INTRODUCTION</span><h1>个人资料</h1><p className="muted">这些内容会显示在网站首页与联系页面。</p></div></div>{saved&&<div className="success-banner">✦ 个人资料已保存。</div>}<div className="admin-panel"><form className="admin-form profile-form" onSubmit={submit}><label>姓名 / 昵称<input value={profile.name} required onChange={e=>setProfile({...profile,name:e.target.value})}/></label><label>个人标语<input value={profile.tagline} onChange={e=>setProfile({...profile,tagline:e.target.value})}/></label><label>个人简介<textarea rows={5} value={profile.bio} onChange={e=>setProfile({...profile,bio:e.target.value})}/></label><label>所在城市<input value={profile.location} onChange={e=>setProfile({...profile,location:e.target.value})}/></label><label>联系邮箱<input type="email" value={profile.email} onChange={e=>setProfile({...profile,email:e.target.value})}/></label><label>头像符号<input value={profile.avatar} onChange={e=>setProfile({...profile,avatar:e.target.value})}/></label><button className="primary-button">保存个人资料</button></form></div></div>
+}
